@@ -6,12 +6,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Order;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::where('user_id', auth()->id())->get();
+        $products = Product::all();
         return response()->json($products);
     }
 
@@ -29,11 +30,16 @@ class ProductController extends Controller
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
+        $uniqueFilename = uniqid() . '_' . time() . '.' . $request->file('image')->getClientOriginalExtension();
+        $imagePath = $request->file('image')->storeAs('product_images', $uniqueFilename, 'public');
+
         $product = Product::create([
             'user_id' => $user->id,
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
+            'image_path' => $imagePath, 
+            'stock' => $request->stock,
         ]);
 
         return response()->json($product, 201);
@@ -41,9 +47,6 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        // Ensure the product belongs to the authenticated user
-        abort_if($product->user_id != auth()->id(), 403);
-
         return response()->json($product);
     }
 
@@ -82,5 +85,12 @@ class ProductController extends Controller
         $products = Product::where('user_id', $userId)->get();
 
         return response()->json($products);
+    }
+    public function productsSoldByUser()
+    {
+        // Fetch products sold by the authenticated user
+        $orders = Order::with(['product', 'user'])->where('user_id', Auth::id())->get();
+
+        return response()->json($orders);
     }
 }

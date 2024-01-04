@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import NavBar from './NavBar';
 
 const HelloWorld = () => {
   const [sayHello, setSayHello] = useState();
@@ -19,6 +20,7 @@ const HelloWorld = () => {
 
   return (
     <div>
+      <NavBar />
       <h1>{sayHello}</h1>
     </div>
   );

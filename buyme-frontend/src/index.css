@@ -66,3 +66,12 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+.navbar-toggler-icon {
+  filter: invert(1);
+}
+
+.custom-large-image {
+  width: 100%; /* Adjust this value to control the width */
+  height: auto; /* Maintain aspect ratio */
+}

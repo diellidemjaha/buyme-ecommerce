@@ -36,4 +36,18 @@ class OrderController extends Controller
 
         return response()->json($order, 201);
     }
+    public function productsBoughtByUser()
+    {
+        $orders = Order::with(['product', 'product.user'])->where('user_id', Auth::id())->get();
+
+        // Extract products and sellers from orders
+        $products = $orders->map(function ($order) {
+            return [
+                'product' => $order->product,
+                'seller' => $order->product->user,
+            ];
+        });
+    
+        return response()->json($products);
+    }
 }
