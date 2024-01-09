@@ -22,7 +22,7 @@ class OrderController extends Controller
         }
 
         $totalPrice = $product->price * $request->input('quantity');
-
+        $buyerId = Auth::id();
         // Create a new order for the authenticated user
         $order = Order::create([
             'user_id' => Auth::id(),
@@ -32,6 +32,7 @@ class OrderController extends Controller
         ]);
 
         $product->decrement('stock', $request->input('quantity'));
+        $order->load('user');
         // You can perform additional logic here, such as updating product quantity or sending confirmation emails
 
         return response()->json($order, 201);

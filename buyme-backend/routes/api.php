@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('products', ProductController::class);
     Route::get('products/by-user/{userId}', [ProductController::class, 'indexByUser']);
     Route::post('purchase/{product}', [OrderController::class, 'purchase']);
+    Route::get('/categories', [CategoryController::class, 'index']);
 });
 
 Route::middleware('auth:sanctum')->get('/user/{userId}', [UserController::class, 'getUserById']);

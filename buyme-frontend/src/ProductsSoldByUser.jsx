@@ -16,6 +16,7 @@ const ProductsSoldByUser = () => {
           },
         });
         setProducts(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error('Error fetching products sold by the user:', error);
       }
@@ -36,7 +37,7 @@ const ProductsSoldByUser = () => {
             {products.map((product) => (
               <li key={product.id}>
                 <strong>Name:</strong> {product.product.name}<br />
-                <strong>Buyer:</strong> {product.user.name}<br />
+                <strong>Buyer:</strong> {product.buyer.name}<br />
                 <strong>Description:</strong> {product.product.description}<br />
                 <strong>Price:</strong> ${product.product.price}<br />
                 {/* Add other details as needed */}

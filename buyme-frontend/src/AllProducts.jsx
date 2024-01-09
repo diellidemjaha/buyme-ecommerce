@@ -4,24 +4,34 @@ import axios from 'axios';
 import NavBar from './NavBar';
 
 const AllProducts = () => {
+  const [category, setCategory] = useState('');
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const headers = {
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
     };
-
+  
     const fetchAllProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/products', { headers });
+        // Include the category parameter in the API request
+        const response = await axios.get('http://localhost:8000/api/products', {
+          headers,
+          params: { category }, // Pass the selected category as a query parameter
+        });
         setProducts(response.data);
       } catch (error) {
-        console.error('Error fetching all products:', error);
+        console.error('Error fetching products:', error);
       }
     };
-
+  
     fetchAllProducts();
-  }, []);
+  }, [category]);
+  
+
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+};
 
   const handleBuy = async (productId) => {
     try {
@@ -37,6 +47,16 @@ const AllProducts = () => {
     <>
       <NavBar />
       <div className="container mt-5">
+
+      <label htmlFor="category">Select Category:</label>
+            <select id="category" name="category" onChange={handleCategoryChange}>
+                <option value="">All</option>
+                <option value="Computers">Computers</option>
+                <option value="Football">Football</option>
+                <option value="Other">Other</option>
+                {/* Add more options based on your categories */}
+            </select>
+
         <h2 className="mb-4">All Products</h2>
         {products.length === 0 ? (
           <p>No products found.</p>

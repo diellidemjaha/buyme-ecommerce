@@ -1,25 +1,50 @@
-// PurchaseProduct.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const PurchaseProduct = ({ productId, onPurchaseSuccess }) => {
   const [quantity, setQuantity] = useState(1);
 
   const handlePurchase = async () => {
-    try {
-      const response = await axios.post(`http://localhost:8000/api/purchase/${productId}`, { quantity }, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+    // Display a confirmation alert
+    const confirmationResult = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, I want to buy it!"
+    });
 
-      if (response.status === 201) {
-        console.log('Purchase successful:', response.data);
-        // You can add additional logic here, such as updating the UI or redirecting the user
-        onPurchaseSuccess();
+    if (confirmationResult.isConfirmed) {
+      try {
+        const response = await axios.post(`http://localhost:8000/api/purchase/${productId}`, { quantity }, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+
+        if (response.status === 201) {
+          // Display a success alert
+          Swal.fire({
+            title: "Purchased!",
+            text: "Your product has been purchased.",
+            icon: "success"
+          });
+
+          // You can add additional logic here, such as updating the UI or redirecting the user
+          onPurchaseSuccess();
+        }
+      } catch (error) {
+        console.error('Purchase failed:', error);
+        // Display an error alert
+        Swal.fire({
+          title: "Error",
+          text: "There was an error during the purchase.",
+          icon: "error"
+        });
       }
-    } catch (error) {
-      console.error('Purchase failed:', error);
     }
   };
 
