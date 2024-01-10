@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from './NavBar';
+import SearchForm from './SearchForm'; 
 
 const AllProducts = () => {
   const [category, setCategory] = useState('');
@@ -47,9 +48,9 @@ const AllProducts = () => {
     <>
       <NavBar />
       <div className="container mt-5">
-
+      <SearchForm />
       <label htmlFor="category">Select Category:</label>
-            <select id="category" name="category" onChange={handleCategoryChange}>
+            <select id="category" name="category" className="form-control" onChange={handleCategoryChange}>
                 <option value="">All</option>
                 <option value="Computers">Computers</option>
                 <option value="Football">Football</option>

@@ -1,5 +1,4 @@
 <?php
-use App\Http\Controllers\HelloWorldController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -7,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('products/bought-by-user', [OrderController::class, 'productsBoughtByUser']);
     Route::get('products/sold-by-user', [ProductController::class, 'productsSoldByUser']);
     Route::get('/products/{product}', [ProductController::class, 'show']);
+    Route::get('/search', [SearchController::class, 'search']);
     Route::resource('products', ProductController::class);
     Route::get('products/by-user/{userId}', [ProductController::class, 'indexByUser']);
     Route::post('purchase/{product}', [OrderController::class, 'purchase']);

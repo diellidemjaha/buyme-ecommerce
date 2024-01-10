@@ -8,6 +8,7 @@ import SingleProduct from './SingleProduct';
 import ProductsBoughtByUser from './ProductsBoughtByUser';
 import ProductsSoldByUser from './ProductsSoldByUser';
 import AllProducts from './AllProducts';
+import SearchResults from './SearchResults';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <Route path="/products-bought" element={<ProductsBoughtByUser />} />
             <Route path="/products-sold" element={<ProductsSoldByUser />} />
             <Route path="/all-products" element={<AllProducts />} />
+            <Route path="/search-results" element={<SearchResults />} />
 
           </Routes>
         }
