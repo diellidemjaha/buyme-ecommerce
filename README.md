@@ -2,6 +2,9 @@
 
 Buyme is a full-stack Ecommerce platform built with Laravel and React, utilizing Laravel Sanctum for authentication. The platform allows users to buy and sell products, provides detailed information about different products, and offers smart search functionality through the MySQL database. Additionally, products can be sorted by categories.
 
+![Example Screenshot](buyme1.jpg)
+![Example Screenshot](buyme2.jpg)
+
 ## Features
 
 - **User Authentication:** Secure user authentication using Laravel Sanctum.
