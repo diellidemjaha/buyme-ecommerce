@@ -14,7 +14,6 @@ class ProductController extends Controller
     {
         $category = $request->input('category');
     
-        // If a category is specified, filter products accordingly
         $products = $category ? Product::where('category', $category)->get() : Product::all();
     
         return response()->json($products);
@@ -57,7 +56,6 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        // Ensure the product belongs to the authenticated user
         abort_if($product->user_id != auth()->id(), 403);
 
         // $request->validate([
@@ -77,7 +75,6 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        // Ensure the product belongs to the authenticated user
         abort_if($product->user_id != auth()->id(), 403);
 
         $product->delete();
@@ -86,7 +83,6 @@ class ProductController extends Controller
     }
     public function indexByUser($userId)
     {
-        // Retrieve products by the specified user_id
         $products = Product::where('user_id', $userId)->get();
 
         return response()->json($products);
@@ -100,7 +96,6 @@ class ProductController extends Controller
     // }
     public function productsSoldByUser()
 {
-    // Fetch products sold by the authenticated user as a seller
     $orders = Order::with(['product', 'product.user'])
         ->whereHas('product.user', function ($query) {
             // Ensure the seller's ID matches the authenticated user's ID
@@ -108,7 +103,6 @@ class ProductController extends Controller
         })
         ->get();
 
-    // Extract products and buyers from orders
     $products = $orders->map(function ($order) {
         return [
             'product' => $order->product,

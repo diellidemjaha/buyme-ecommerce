@@ -2,61 +2,66 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from './NavBar';
-import SearchForm from './SearchForm'; 
+import SearchForm from './SearchForm';
+import { Rating } from 'react-simple-star-rating';
+import { useParams } from 'react-router-dom';
 
 const AllProducts = () => {
+  const { productId } = useParams();
   const [category, setCategory] = useState('');
   const [products, setProducts] = useState([]);
+  const [averageRating, setAverageRating] = useState(0);
+
+  const headers = {
+    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+  };
 
   useEffect(() => {
-    const headers = {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    };
-  
     const fetchAllProducts = async () => {
       try {
-        // Include the category parameter in the API request
         const response = await axios.get('http://localhost:8000/api/products', {
           headers,
-          params: { category }, // Pass the selected category as a query parameter
+          params: { category },
         });
         setProducts(response.data);
+
+        // Fetch ratings for each product individually
+        response.data.forEach(async (product) => {
+          try {
+            const ratingResponse = await axios.get(`http://localhost:8000/api/products/${product.id}/ratings`, { headers });
+            // Update the product with its average rating
+            setAverageRating((prevRatings) => ({
+              ...prevRatings,
+              [product.id]: ratingResponse.data.average_rating,
+            }));
+          } catch (ratingError) {
+            // console.error(`Error fetching ratings for product ${product.id}:`, ratingError);
+          }
+        });
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     };
-  
+
     fetchAllProducts();
   }, [category]);
-  
 
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
-};
-
-  const handleBuy = async (productId) => {
-    try {
-      const response = await axios.post(`http://localhost:8000/api/purchase/${productId}`);
-      console.log('Purchase successful:', response.data);
-      // You can add additional logic here, such as updating the UI
-    } catch (error) {
-      console.error('Purchase failed:', error);
-    }
   };
 
   return (
     <>
       <NavBar />
       <div className="container mt-5">
-      <SearchForm />
-      <label htmlFor="category">Select Category:</label>
-            <select id="category" name="category" className="form-control" onChange={handleCategoryChange}>
-                <option value="">All</option>
-                <option value="Computers">Computers</option>
-                <option value="Football">Football</option>
-                <option value="Other">Other</option>
-                {/* Add more options based on your categories */}
-            </select>
+        <SearchForm />
+        <label htmlFor="category">Select Category:</label>
+        <select id="category" name="category" className="form-control" onChange={handleCategoryChange}>
+          <option value="">All</option>
+          <option value="Computers">Computers</option>
+          <option value="Football">Football</option>
+          <option value="Other">Other</option>
+        </select>
 
         <h2 className="mb-4">All Products</h2>
         {products.length === 0 ? (
@@ -76,7 +81,18 @@ const AllProducts = () => {
                     <Link to={`/Singleproducts/${product.id}`}>
                       <button className="btn btn-primary">View</button>
                     </Link>
-                    {/* <button onClick={() => handleBuy(product.id)} className="btn btn-success mx-2">Buy</button> */}
+                    {averageRating[product.id] !== undefined ? (
+                    <div className="d-flex gap-2">
+                      <div className="col-md-12 col-lg-6">
+                        <div id="rating">
+                          {averageRating[product.id]}
+                          <Rating initialValue={averageRating[product.id]} size={20} label />
+                        </div>
+                      </div>
+                    </div>
+                    ) : (
+                      <p> </p>
+                    )}
                   </div>
                 </div>
               </div>

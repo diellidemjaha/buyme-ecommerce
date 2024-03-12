@@ -27,7 +27,6 @@ const UserProducts = ({ userId }) => {
     try {
       const response = await axios.post(`http://localhost:8000/api/purchase/${productId}`);
       console.log('Purchase successful:', response.data);
-      // You can add additional logic here, such as updating the UI
     } catch (error) {
       console.error('Purchase failed:', error);
     }
@@ -41,7 +40,6 @@ const UserProducts = ({ userId }) => {
       const response = await axios.delete(`http://localhost:8000/api/products/${productId}`, { headers });
 
       if (response.status === 200) {
-        // Product deleted successfully, update the UI
         setProducts((prevProducts) => prevProducts.filter((product) => product.id !== productId));
       }
     } catch (error) {

@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\RatingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('products/by-user/{userId}', [ProductController::class, 'indexByUser']);
     Route::post('purchase/{product}', [OrderController::class, 'purchase']);
     Route::get('/categories', [CategoryController::class, 'index']);
+    Route::post('/products/ratings', [RatingsController::class, 'store']);
+    Route::get('/products/{id}/ratings', [RatingsController::class, 'getRatings']);
 });
 
 Route::middleware('auth:sanctum')->get('/user/{userId}', [UserController::class, 'getUserById']);

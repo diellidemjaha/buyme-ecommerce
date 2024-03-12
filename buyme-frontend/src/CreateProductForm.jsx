@@ -1,4 +1,3 @@
-// CreateProductForm.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from './NavBar';
@@ -8,7 +7,7 @@ const CreateProductForm = () => {
     name: '',
     description: '',
     price: 0,
-    stock: 0, // Add stock field
+    stock: 0, 
     category: '',
     image: null,
   });
@@ -16,7 +15,6 @@ const CreateProductForm = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    // Fetch categories from your API endpoint
     const fetchCategories = async () => {
       try {
         const response = await axios.get('http://localhost:8000/api/categories', {
@@ -56,7 +54,7 @@ const CreateProductForm = () => {
       formDataForUpload.append('name', formData.name);
       formDataForUpload.append('description', formData.description);
       formDataForUpload.append('price', formData.price);
-      formDataForUpload.append('stock', formData.stock); // Append stock value
+      formDataForUpload.append('stock', formData.stock); 
       formDataForUpload.append('category', formData.category);
       formDataForUpload.append('image', formData.image);
 
@@ -70,7 +68,6 @@ const CreateProductForm = () => {
       if (response.status === 201) {
         console.log('Product created successfully');
         window.location.href="/";
-        // You can redirect the user or perform other actions after successful product creation
       }
     } catch (error) {
       console.error('Product creation failed:', error);
@@ -155,7 +152,6 @@ const CreateProductForm = () => {
             />
           </div>
 
-          {/* Add other form fields as needed */}
 
           <button type="submit" className="btn btn-primary">Create Product</button>
         </form>

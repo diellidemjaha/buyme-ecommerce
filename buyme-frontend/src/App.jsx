@@ -36,7 +36,7 @@ function App() {
             <Route path="/Singleproducts/:productId" element={<SingleProduct />} />
             <Route path="/products-bought" element={<ProductsBoughtByUser />} />
             <Route path="/products-sold" element={<ProductsSoldByUser />} />
-            <Route path="/all-products" element={<AllProducts />} />
+            <Route path="/all-products" element={<AllProducts/>} />
             <Route path="/search-results" element={<SearchResults />} />
 
           </Routes>

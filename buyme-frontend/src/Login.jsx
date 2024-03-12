@@ -63,7 +63,6 @@ const Login = () => {
       console.error('Login error:', error);
       console.log('Error response data:', error.response?.data);
 
-      // Display an error alert for incorrect username or password
       let timerInterval;
       Swal.fire({
         title: "Incorrect!",

@@ -6,7 +6,6 @@ const PurchaseProduct = ({ productId, onPurchaseSuccess }) => {
   const [quantity, setQuantity] = useState(1);
 
   const handlePurchase = async () => {
-    // Display a confirmation alert
     const confirmationResult = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -26,19 +25,16 @@ const PurchaseProduct = ({ productId, onPurchaseSuccess }) => {
         });
 
         if (response.status === 201) {
-          // Display a success alert
           Swal.fire({
             title: "Purchased!",
             text: "Your product has been purchased.",
             icon: "success"
           });
 
-          // You can add additional logic here, such as updating the UI or redirecting the user
           onPurchaseSuccess();
         }
       } catch (error) {
         console.error('Purchase failed:', error);
-        // Display an error alert
         Swal.fire({
           title: "Error",
           text: "There was an error during the purchase.",

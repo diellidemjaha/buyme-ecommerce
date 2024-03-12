@@ -24,7 +24,6 @@ const Register = () => {
       if (response.status === 201) {
         console.log('Registration successful');
   
-        // Redirect to login after successful registration
         window.location.href = "/login";
       }
     } catch (error) {

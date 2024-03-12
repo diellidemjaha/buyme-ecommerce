@@ -21,7 +21,6 @@ class AuthController extends Controller
         return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
     }
     /**
-     * Login user and create a token.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
@@ -49,7 +48,6 @@ class AuthController extends Controller
     }
 
     /**
-     * Logout user and revoke the token.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse

@@ -3,11 +3,42 @@ import axios from 'axios';
 import NavBar from './NavBar';
 import { useParams } from 'react-router-dom';
 import PurchaseProduct from './PurchaseProduct';
+import { Rating } from 'react-simple-star-rating'
+
 
 const SingleProduct = () => {
-  const { productId } = useParams(); // Use a different variable name to avoid conflicts
+  const { productId } = useParams(); 
   const [product, setProduct] = useState(null);
   const [userName, setUserName] = useState(null);
+  const [rating, setRating] = useState(0)
+  const [averageRating, setAverageRating] = useState(0);
+
+  const headers = {
+    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+  };
+
+  const handleRating = rate => {
+    setRating(rate);
+    axios.post(`http://localhost:8000/api/products/ratings`, { rating: rate, product_id: productId }, { headers })
+      .then(response => {
+        console.log('Rating submitted successfully');
+      })
+      .catch(error => {
+        console.error('Error submitting rating:', error);
+      });
+  };
+
+  const getRatings = () => {
+    axios.get(`http://localhost:8000/api/products/${productId}/ratings`, { headers })
+      .then(response => {
+        setAverageRating(response.data.average_rating);
+      })
+      .catch(error => {
+        console.error('Error fetching ratings:', error);
+      });
+      
+     
+  };
 
   useEffect(() => {
     const headers = {
@@ -30,13 +61,13 @@ const SingleProduct = () => {
     };
 
     fetchProduct();
+    getRatings();
   }, [productId]);
 
   const handleBuy = async () => {
     try {
       const response = await axios.post(`http://localhost:8000/api/purchase/${productId}`);
       console.log('Purchase successful:', response.data);
-      // You can add additional logic here, such as updating the UI
     
     } catch (error) {
       console.error('Purchase failed:', error);
@@ -44,7 +75,6 @@ const SingleProduct = () => {
   };
 
   const handlePurchaseSuccess = () => {
-    // You can add logic here to handle a successful purchase, such as updating the UI
     console.log('Purchase successful! Update UI or perform other actions.');
   };
 
@@ -72,6 +102,30 @@ const SingleProduct = () => {
             <p>Seller: {userName}</p>
             {/* <button onClick={handleBuy} className="btn btn-primary">Buy</button> */}
             <PurchaseProduct productId={productId} onPurchaseSuccess={handlePurchaseSuccess} />
+            <div className="d-flex gap-2">
+                    <div className="col-md-12 col-lg-6">
+                    <div id="rating">
+                        {averageRating.length > 0 ? (
+                          <>
+                            Average Rating: {averageRating}
+                            <Rating
+                              // ratingValue={4.38}
+                              initialValue={averageRating}
+                              size={20}
+                              label
+                            />
+                          </>
+                        ) : (
+                          <>
+                            Rate this Product:
+                            <Rating
+                              onClick={handleRating}
+                            />
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
           </div>
         </div>
       </div>

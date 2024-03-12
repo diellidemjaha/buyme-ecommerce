@@ -16,12 +16,11 @@ const SearchForm = () => {
     try {
       const response = await axios.get('http://localhost:8000/api/search', {
         headers,
-        params: { q: searchTerm }, // Pass the search term as a query parameter
+        params: { q: searchTerm }, 
       });
   
       const products = response.data;
   
-      // Redirect to the search results page
       navigate(`/search-results?q=${searchTerm}`, { state: { products } });
     } catch (error) {
       console.error('Error searching products:', error);

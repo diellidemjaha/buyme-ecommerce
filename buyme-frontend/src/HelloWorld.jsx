@@ -7,7 +7,7 @@ const HelloWorld = () => {
 
   useEffect(() => {
     fetchHelloWorld();
-  }, []); // Specify an empty dependency array to run the effect only once on mount
+  }, []); 
 
   const fetchHelloWorld = async () => {
     try {

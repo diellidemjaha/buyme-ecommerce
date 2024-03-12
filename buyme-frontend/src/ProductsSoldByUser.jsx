@@ -1,5 +1,3 @@
-// ProductsSoldByUser.jsx
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from './NavBar';
@@ -40,7 +38,6 @@ const ProductsSoldByUser = () => {
                 <strong>Buyer:</strong> {product.buyer.name}<br />
                 <strong>Description:</strong> {product.product.description}<br />
                 <strong>Price:</strong> ${product.product.price}<br />
-                {/* Add other details as needed */}
               </li>
             ))}
           </ul>
