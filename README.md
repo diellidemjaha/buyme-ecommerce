@@ -18,7 +18,7 @@ Buyme is a full-stack Ecommerce platform built with Laravel and React, utilizing
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/diellidemjaha/buyme.git
+git clone https://github.com/diellidemjaha/buyme-ecommerce.git
 cd buyme
 Laravel Backend
 ```
