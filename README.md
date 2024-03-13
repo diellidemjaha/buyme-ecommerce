@@ -27,7 +27,7 @@ Install Dependencies:
 bash
 Copy code
 ```
-cd backend
+cd buyme-backend
 composer install
 ```
 Database Setup:
@@ -50,7 +50,7 @@ Install Dependencies:
 bash
 Copy code
 ```
-cd frontend
+cd buyme-frontend
 npm install
 ```
 Start React Development Server:
@@ -77,7 +77,7 @@ Run Migrations:
 bash
 Copy code
 ```
-cd backend
+cd buyme-backend
 php artisan migrate
 ```
 Now, you can access the Buyme Ecommerce platform at http://localhost:3000.
