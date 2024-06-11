@@ -38,9 +38,6 @@ const SearchForm = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      {/* <label className="form-label" htmlFor="search-input">
-        Search
-      </label> */}
     </div>
     <button type="submit" id="search-button" className="btn btn-primary">
       <i className="fas fa-search"></i>
