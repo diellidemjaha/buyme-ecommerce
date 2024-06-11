@@ -29,7 +29,6 @@ function App() {
           :
           <Routes>
             <Route path="/" element={<AllProducts />} />
-            {/* <Route path="/hello-world" element={<HelloWorld />} /> */}
             <Route path="/add-product" element={<CreateProductForm />} />
             <Route path="/user-products/:userId" render={({ match }) => <UserProducts userId={match.params.userId} />} />
             <Route path="/user-products" element={<UserProducts />} />
