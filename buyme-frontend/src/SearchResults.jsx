@@ -21,7 +21,7 @@ const SearchResults = () => {
           return { productId: product.id, averageRating: ratingResponse.data.average_rating };
         } catch (ratingError) {
           console.error(`Error fetching ratings for product ${product.id}:`, ratingError);
-          return { productId: product.id, averageRating: 0 }; // or any default value you prefer
+          return { productId: product.id, averageRating: 0 }; 
         }
       });
 
