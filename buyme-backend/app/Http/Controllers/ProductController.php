@@ -87,13 +87,7 @@ class ProductController extends Controller
 
         return response()->json($products);
     }
-    // public function productsSoldByUser()
-    // {
-    //     // Fetch products sold by the authenticated user
-    //     $orders = Order::with(['product', 'user'])->where('user_id', Auth::id())->get();
 
-    //     return response()->json($orders);
-    // }
     public function productsSoldByUser()
 {
     $orders = Order::with(['product', 'product.user'])
