@@ -100,7 +100,6 @@ const SingleProduct = () => {
             <p>Price: ${product.price}</p>
             <p>Stock: {product.stock}</p>
             <p>Seller: {userName}</p>
-            {/* <button onClick={handleBuy} className="btn btn-primary">Buy</button> */}
             <PurchaseProduct productId={productId} onPurchaseSuccess={handlePurchaseSuccess} />
             <div className="d-flex gap-2">
                     <div className="col-md-12 col-lg-6">
